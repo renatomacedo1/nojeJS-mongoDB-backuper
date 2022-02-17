@@ -1,0 +1,19 @@
+{
+  "name": "nodejs-mongodb-backuper",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon app.js"
+  },
+  "keywords": [],
+  "author": "Renato Macedo <macedo.renato@protonmail.com>",
+  "license": "ISC",
+  "devDependencies": {
+    "nodemon": "^2.0.6"
+  },
+  "dependencies": {
+    "node-cron": "^2.0.3"
+  }
+}
