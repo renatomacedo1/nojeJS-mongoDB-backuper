@@ -1,2 +1,2 @@
 # nojeJS-mongoDB-backuper
-Schedule mongoDB backups on nodeJS
+Schedule mongoDB Atlas backups on nodeJS
