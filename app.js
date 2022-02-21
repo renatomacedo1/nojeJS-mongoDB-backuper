@@ -12,7 +12,10 @@ Using mongorestore - without any args:
   will try to restore every database from "dump" folder in current directory, if "dump" folder does not exist then it will simply fail.
 */
 
-const DB_NAME = process.env.MONGO_DB;
+const user = 'admin'
+const password = 'outono123'
+const cluster = 'cluster0.g4qfs.mongodb.net'
+const DB_NAME = 'GANTT';
 const dir = 'backup'
 const ARCHIVE_PATH = path.join(__dirname, 'public', `${dir}.gzip`);
 
@@ -25,7 +28,7 @@ cron.schedule('*/5 * * * * *', () => backupMongoDB());
 
 function backupMongoDB() {
   const child = spawn('mongodump', [
-    `--db=${DB_NAME}`,
+    `--uri=mongodb+srv://admin:outono123@cluster0.g4qfs.mongodb.net/GANTT`,
     `--archive=${ARCHIVE_PATH}`,
     '--gzip',
   ]);
