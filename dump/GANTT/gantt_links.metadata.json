@@ -1,0 +1,1 @@
+{"indexes":[{"v":{"$numberInt":"2"},"key":{"_id":{"$numberInt":"1"}},"name":"_id_"}],"uuid":"40729e73bdb74f3c8a75cb3caef4f4c3","collectionName":"gantt_links","type":"collection"}
