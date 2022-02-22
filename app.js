@@ -24,7 +24,7 @@ const DB_NAME = process.env.MONGO_DB;
 const DB_NAME2 = process.env.MONGO_DB2;
 const dir = "GANTT";
 /* const ARCHIVE_PATH = path.join(__dirname, "public", `${dir}.gzip`); */
-const ARCHIVE_PATH = path.join(__dirname, "public", `${dir}`);
+const ARCHIVE_PATH = "backup/";
 
 // 1. Cron expression for every 5 seconds - */5 * * * * *
 // 2. Cron expression for every night at 00:00 hours (0 0 * * * )
@@ -47,6 +47,7 @@ function backupMongoDB() {
 
   const child = spawn("mongodump", [
     `--uri=mongodb+srv://admin:outono123@cluster0.g4qfs.mongodb.net/GANTT`,
+    `-o${ARCHIVE_PATH}`,
   ]);
 
   child.stdout.on("data", (data) => {
@@ -63,7 +64,7 @@ function backupMongoDB() {
     else if (signal) console.log("Process killed with signal:", signal);
     else {
       console.log("Backup is successfull ✅");
-      zipper.sync.zip("./dump/GANTT/").compress().save("backup.zip");
+      zipper.sync.zip("./backup/GANTT/").compress().save("backup.zip");
     }
   });
 }
