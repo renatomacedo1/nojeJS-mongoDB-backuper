@@ -1,3 +1,4 @@
 # nojeJS-mongoDB-backuper
+
 Schedule mongoDB Atlas backups on nodeJS
-Neeeds work. Not zipping individual files but all in one. Unreadable.
+Works with string but not with variable (?!)

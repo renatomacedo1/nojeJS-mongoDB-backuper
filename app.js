@@ -2,6 +2,14 @@ const { spawn, exec } = require("child_process");
 const path = require("path");
 const cron = require("node-cron");
 
+var file_system = require("fs");
+var archiver = require("archiver");
+
+var output = file_system.createWriteStream("backup.zip");
+var archive = archiver("zip");
+
+var zipper = require("zip-local");
+
 /* 
 Basic mongo dump and restore commands, they contain more options you can have a look at man page for both of them.
 1. mongodump --db=GANTT --archive=./gantt.gzip --gzip
@@ -23,7 +31,7 @@ const ARCHIVE_PATH = path.join(__dirname, "public", `${dir}`);
 // Note: 2nd expression only contains 5 fields, since seconds is not necessary
 
 // Scheduling the backup every 5 seconds (using node-cron)
-cron.schedule("*/50 * * * * *", () => backupMongoDB());
+cron.schedule("*/10 * * * * *", () => backupMongoDB());
 
 function backupMongoDB() {
   /* const child = spawn('mongodump', [
@@ -37,7 +45,9 @@ function backupMongoDB() {
     "--gzip",
   ]); */
 
-  const child = spawn("mongodump", [`--db=${DB_NAME2}`]);
+  const child = spawn("mongodump", [
+    `--uri=mongodb+srv://admin:outono123@cluster0.g4qfs.mongodb.net/GANTT`,
+  ]);
 
   child.stdout.on("data", (data) => {
     console.log("stdout:\n", data);
@@ -51,6 +61,9 @@ function backupMongoDB() {
   child.on("exit", (code, signal) => {
     if (code) console.log("Process exit with code:", code);
     else if (signal) console.log("Process killed with signal:", signal);
-    else console.log("Backup is successfull ✅");
+    else {
+      console.log("Backup is successfull ✅");
+      zipper.sync.zip("./dump/GANTT/").compress().save("backup.zip");
+    }
   });
 }
