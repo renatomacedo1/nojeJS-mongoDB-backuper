@@ -10,15 +10,6 @@ var archive = archiver("zip");
 
 var zipper = require("zip-local");
 
-/* 
-Basic mongo dump and restore commands, they contain more options you can have a look at man page for both of them.
-1. mongodump --db=GANTT --archive=./gantt.gzip --gzip
-2. mongorestore --db=GANTT --archive=./gantt.gzip --gzip
-Using mongodump - without any args:
-  will dump each and every db into a folder called "dump" in the directory from where it was executed.
-Using mongorestore - without any args:
-  will try to restore every database from "dump" folder in current directory, if "dump" folder does not exist then it will simply fail.
-*/
 
 const DB_NAME = process.env.MONGO_DB;
 const DB_NAME2 = process.env.MONGO_DB2;
@@ -34,19 +25,10 @@ const ARCHIVE_PATH = "backup/";
 cron.schedule("*/10 * * * * *", () => backupMongoDB());
 
 function backupMongoDB() {
-  /* const child = spawn('mongodump', [
-    `--db=${DB_NAME}`,
-    `--archive=${ARCHIVE_PATH}`,
-    '--gzip',
-  ]); */
-  /* const child = spawn("mongodump", [
-    `--uri=mongodb+srv://admin:outono123@cluster0.g4qfs.mongodb.net/GANTT`,
-    `--archive=${ARCHIVE_PATH}`,
-    "--gzip",
-  ]); */
+
 
   const child = spawn("mongodump", [
-    `--uri=mongodb+srv://admin:outono123@cluster0.g4qfs.mongodb.net/GANTT`,
+    `--uri=${DB_NAME}`,
     `-o${ARCHIVE_PATH}`,
   ]);
 
